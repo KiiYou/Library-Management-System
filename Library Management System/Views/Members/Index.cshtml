@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Library_Management_System.Models.Member>
+@{
+    ViewData["Title"] = "Members List";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            background-color: #f4f7fa;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h1 {
+            margin-top: 20px;
+            color: #512da8; 
+        }
+
+        .table {
+            margin-top: 20px;
+        }
+
+            .table th {
+                background-color: #e7e7e7; 
+            }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #512da8;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+            .fab:hover {
+                background-color: #6a1b9a;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Members List</h1>
+
+        <div class="card">
+            <div class="card-body">
+                <p>
+                    <a class="btn btn-primary" href="/Members/Create">
+                        <i class="fa-solid fa-user-plus"></i> Add New Member
+                    </a>
+                </p>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Membership Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var member in Model)
+                        {
+                            <tr>
+                                <td>@member.Name</td>
+                                <td>@member.Email</td>
+                                <td>@member.MembershipDate.ToShortDateString()</td>
+                                <td>
+                                    <a href="/Members/Details/@member.MemberId" class="btn btn-info btn-sm"><i class="fa-solid fa-info-circle"></i> </a>
+                                    <a href="/Members/Edit/@member.MemberId" class="btn btn-warning btn-sm"><i class="fa-solid fa-edit"></i> </a>
+                                    <a href="/Members/Delete/@member.MemberId" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <a href="/Members/Create" class="fab">
+            <i class="fa-solid fa-plus"></i>
+        </a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

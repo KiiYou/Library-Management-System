@@ -1,0 +1,169 @@
+﻿@using Microsoft.CodeAnalysis.Differencing
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Lora', serif; 
+        }
+
+        
+        .hero {
+            background: linear-gradient(135deg, #008080, #20c997); 
+            color: #ffffff;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-top: 20px;
+        }
+
+   
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px); 
+        }
+
+        .card-body {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .card-body h5 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .card-body p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: #008080; 
+            margin-bottom: 20px;
+        }
+
+        
+        .btn-custom {
+            background-color: #008080;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .btn-custom:hover {
+            background-color: #20c997; 
+        }
+
+        
+        .footer {
+            background-color: #006666; 
+            color: #ffffff;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        
+        
+        Edit
+        (max-width: 768px) {
+        .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .card-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    
+    <div class="hero">
+        <h1>Welcome to the Library Management System</h1>
+        <p>Explore a vast world of books, knowledge, and resources.</p>
+        <a href="@Url.Action("Index", "Books")" class="btn btn-custom btn-lg mt-4">Browse Books</a>
+    </div>
+
+    
+    <div class="container my-5">
+        <div class="row">
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-book-open"></i>
+                        <h5 class="card-title">Browse Our Collection</h5>
+                        <p class="card-text">Find a variety of books, journals, and more. Your next read is waiting!</p>
+                        <a href="@Url.Action("Index", "Books")" class="btn btn-custom">Explore Collection</a>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-user-plus"></i>
+                        <h5 class="card-title">Add a Member</h5>
+                        <p class="card-text">Join our library community to gain full access to exclusive resources.</p>
+                        <a href="@Url.Action("Create", "Members")" class="btn btn-custom">Join Now</a>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-headset"></i>
+                        <h5 class="card-title">Need Help?</h5>
+                        <p class="card-text">Our librarians are here to assist with any queries or issues you have.</p>
+                        <a href="@Url.Action("Index", "Contact")" class="btn btn-custom">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="footer">
+        <p>&copy; 2024 Library Management System. All rights reserved.</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

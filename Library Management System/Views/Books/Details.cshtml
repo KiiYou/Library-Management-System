@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Details";
+}
+
+@model Library_Management_System.Models.Book
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            background-color: #eef3f9;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .details-container {
+            margin-top: 50px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        h2 {
+            color: #1e3a8a;
+            font-weight: bold;
+        }
+
+        h4 {
+            color: #2563eb;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        strong {
+            color: #1e3a8a;
+        }
+
+        .btn-custom-primary {
+            background-color: #1e3a8a;
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        .btn-custom-secondary {
+            background-color: #2563eb;
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        .btn-warning {
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        .btn-secondary {
+            border-radius: 50px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="details-container">
+            <h2>Book Details</h2>
+
+            <div>
+                <h4>@Model.Title</h4>
+                <p>
+                    <strong>Author:</strong> @Model.Author <br />
+                    <strong>Genre:</strong> @Model.Genre <br />
+                    <strong>Available:</strong> @(Model.IsAvailable ? "Yes" : "No") <br />
+                </p>
+            </div>
+
+            <p>
+                <a asp-action="Edit" asp-route-id="@Model.BookId" class="btn btn-warning">
+                    <i class="fa-solid fa-pen"></i> Edit
+                </a>
+                <a asp-action="Index" class="btn btn-custom-secondary">
+                    <i class="fa-solid fa-arrow-left"></i> Back to List
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

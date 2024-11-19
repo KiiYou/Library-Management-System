@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Library_Management_System.Models.Book>
+@{
+    ViewData["Title"] = "Available Books";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            background-color: #f4f7fa;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        .table {
+            margin-top: 20px;
+        }
+
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #512da8; 
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+            .fab:hover {
+                background-color: #6a1b9a; 
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Available Books</h2>
+
+        <form asp-action="Index" method="get" class="mb-3">
+            <div class="form-group">
+                <input type="text" name="searchString" class="form-control" placeholder="Search by title, author, or genre" />
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Search" class="btn btn-primary" />
+                <a href="@Url.Action("Index", "Books")" class="btn btn-secondary">Clear Search</a>
+            </div>
+        </form>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>Status</th>
+                    <th>Functions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model)
+                {
+                    <tr>
+                        <td>@book.Title</td>
+                        <td>@book.Author</td>
+                        <td>@book.Genre</td>
+                        <td>@(book.IsAvailable ? "Available" : "Checked Out")</td>
+                        <td>
+                            <a href="/Books/Details/@book.BookId" class="text-info"><i class="fa-solid fa-circle-info"></i></a> |
+                            <a href="/Books/Edit/@book.BookId" class="text-warning"><i class="fa-solid fa-pen"></i></a> |
+                            <a href="/Books/Delete/@book.BookId" class="text-danger"><i class="fa-regular fa-trash-can"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <a href="@Url.Action("Create", "Books")" class="fab">
+            <i class="fa-solid fa-plus"></i>
+        </a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

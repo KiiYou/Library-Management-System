@@ -1,0 +1,130 @@
+﻿@{
+    ViewData["Title"] = "Create";
+    Layout = "_CheckoutLayout";
+}
+
+@model Library_Management_System.Models.Checkout
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+    
+    <title>Checkout Form</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+            padding: 20px;
+            position: relative; 
+            min-height: 100vh; 
+        }
+
+        .checkout-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .back-button {
+            position: absolute;
+            bottom: 20px; 
+            left: 20px; 
+            z-index: 1000;
+            background-color: #6c757d; 
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+            .back-button:hover {
+                background-color: #5a6268;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="checkout-container">
+        <h2 class="text-center">Checkout</h2>
+        <form asp-action="Create" method="post" onsubmit="return validateDates()">
+            <div class="form-group">
+                <label for="bookSearch">Book</label>
+                <input type="text" id="bookSearch" name="BookTitle" class="form-control" required />
+                <input type="hidden" asp-for="BookId" id="BookId" />
+            </div>
+            <div class="form-group">
+                <label for="memberSearch">Member</label>
+                <input type="text" id="memberSearch" name="MemberName" class="form-control" required />
+                <input type="hidden" asp-for="MemberId" id="MemberId" />
+            </div>
+            <div class="form-group">
+                <label for="CheckoutDate">Checkout Date</label>
+                <input asp-for="CheckoutDate" type="date" class="form-control" id="checkoutDate" required />
+            </div>
+            <div class="form-group">
+                <label for="DueDate">Due Date</label>
+                <input asp-for="DueDate" type="date" class="form-control" id="dueDate" required />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Checkout</button>
+        </form>
+    </div>
+
+    <a href="@Url.Action("Index", "Home")" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
+
+    @section Scripts {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $("#bookSearch").autocomplete({
+                    source: '/Books/GetBookTitles', 
+                    select: function (event, ui) {
+                        $('#bookSearch').val(ui.item.label); 
+                        $('#BookId').val(ui.item.value); 
+                        return false;
+                    }
+                });
+
+
+                $("#memberSearch").autocomplete({
+                    source: '/Members/GetMemberNames', 
+                    select: function (event, ui) {
+                        $('#memberSearch').val(ui.item.label); 
+                        $('#MemberId').val(ui.item.value); 
+                        return false;
+                    }
+                });
+            });
+            function validateDates() {
+                var checkoutDate = new Date(document.getElementById('checkoutDate').value);
+                var dueDate = new Date(document.getElementById('dueDate').value);
+
+                if (dueDate <= checkoutDate) {
+                    alert('Due date must be after the checkout date.');
+                    return false;
+                }
+                return true;
+            }
+        </script>
+    }
+</body>
+
+</html>

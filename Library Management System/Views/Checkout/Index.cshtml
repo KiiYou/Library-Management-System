@@ -1,0 +1,149 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+@model IEnumerable<Library_Management_System.Models.Checkout>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Checkout Records</h2>
+
+    <table class="table table-striped table-hover" id="checkoutTable">
+        <thead class="thead-dark">
+            <tr>
+                <th>Book</th>
+                <th>Member</th>
+                <th>Checkout Date</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Penalty</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var checkout in Model)
+            {
+                <tr>
+                    <td>@checkout.Book?.Title</td>
+                    <td>@checkout.Member?.Name</td>
+                    <td>@checkout.CheckoutDate.ToString("yyyy-MM-dd")</td>
+                    <td>@checkout.DueDate.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        @if (checkout.ReturnDate != null)
+                        {
+                            @checkout.ReturnDate?.ToString("yyyy-MM-dd")
+                        }
+                        else
+                        {
+                            <span>N/A</span>
+                        }
+                    </td>
+                    <td style="background-color:@(checkout.IsPenality ? "red" : "green"); color:white;">
+                        @if (checkout.IsPenality)
+                        {
+                            <a href="@Url.Action("Penalty", "Checkout", new { checkoutId  = checkout.CheckoutId })" style="color:white;">
+                                Penalty Applied
+                            </a>
+                        }
+                        else
+                        {
+                            <span>No Penalty</span>
+                        }
+                    </td>
+
+                    <td>
+                        @if (!checkout.IsReturned)
+                        {
+                            <form asp-action="Return" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@checkout.CheckoutId" />
+                                <button type="submit" class="btn btn-sm btn-success">
+                                    Return
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <span class="badge badge-secondary">Returned</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-center" style="margin-bottom:10px">
+        <a href="@Url.Action("Create", "Checkout")" class="btn btn-primary mt-3">Checkout New Book</a>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary mt-3">Back to Home</a>
+        <button onclick="printTable()" class="btn btn-info mt-3">Print Records</button>
+    </div>
+</div>
+
+
+<form asp-action="ClearAllCheckouts" method="post" class="floating-btn-form">
+    <button type="submit" class="floating-btn">
+        <i class="fas fa-trash"></i>
+    </button>
+</form>
+
+<script>
+    function printTable() {
+        var checkoutTable = document.getElementById('checkoutTable');
+        if (!checkoutTable) {
+            console.error("Error: Table with ID 'checkoutTable' not found.");
+            return;
+        }
+        var newWindow = window.open('', '', 'height=600,width=800');
+        if (!newWindow || newWindow.closed) {
+            console.error("Error: Popup window may be blocked. Please allow popups for this site.");
+            return;
+        }
+        var printDoc = document.createElement('div');
+        var printTableClone = checkoutTable.cloneNode(true);
+        printTableClone.classList.add('print-style');
+        printDoc.appendChild(printTableClone);
+        newWindow.document.write(printDoc.innerHTML);
+        printDoc.remove();
+        newWindow.focus();
+        newWindow.print();
+    }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<style>
+    .floating-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background-color: #dc3545; 
+        color: #fff; 
+        border-radius: 50%;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        font-size: 24px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .floating-btn:hover {
+            background-color: #c82333; 
+            transform: scale(1.1); 
+        }
+
+        .floating-btn i {
+            font-size: 20px; 
+        }
+
+    .floating-btn-form {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+    }
+</style>
