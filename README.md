@@ -1,0 +1,1 @@
+tracking book checkouts, returns, and penalties for late returns. The system will include a search feature for available books, as well as member management. SQL Server will store book and member details. ASP.NET Core with C# will process transactions
